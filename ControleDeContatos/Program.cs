@@ -1,3 +1,6 @@
+using ControleDeContatos.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace ControleDeContatos
 {
     public class Program
@@ -10,6 +13,12 @@ namespace ControleDeContatos
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+
+            //Configurando BD
+            var connectionString = builder.Configuration.GetConnectionString("DataBase");
+            builder.Services.AddEntityFrameworkSqlServer().AddDbContext<SistemaCadastroDbContext>(options =>
+            options.UseSqlServer(connectionString));
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
